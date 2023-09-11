@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       env:
         DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
-      run: make ci
+      run: make DOCKER_HUB_SECRET="${DOCKER_HUB_SECRET}" ci
