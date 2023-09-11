@@ -4,7 +4,12 @@ DOCKER_HUB_NAME?='tanis2000/tac_plus'
 
 .PHONY: alpine ubuntu tag
 
-all: alpine ubuntu
+all: create-builder alpine ubuntu
+
+ci: create-builder ci-alpine ci-ubuntu
+
+create-builder:
+	docker buildx create --name multi-arch-builder --bootstrap --use
 
 alpine:
 	docker buildx build --platform linux/amd64,linux/arm64 \
@@ -21,3 +26,19 @@ ubuntu:
 		--build-arg SRC_HASH=$(SHA256) \
 		-f Dockerfile \
 		--push .
+
+ci-alpine:
+	docker build \
+		-t $(DOCKER_HUB_NAME):alpine \
+		--build-arg SRC_VERSION=$(VERSION) \
+		--build-arg SRC_HASH=$(SHA256) \
+		-f alpine.Dockerfile \
+		.
+
+ci-ubuntu:
+	docker build \
+		-t $(DOCKER_HUB_NAME):ubuntu \
+		--build-arg SRC_VERSION=$(VERSION) \
+		--build-arg SRC_HASH=$(SHA256) \
+		-f Dockerfile \
+		.
