@@ -4,7 +4,10 @@ DOCKER_HUB_NAME?='tanis2000/tac_plus'
 
 .PHONY: alpine ubuntu tag
 
-all: alpine ubuntu
+all: create-builder alpine ubuntu
+
+create-builder:
+	docker buildx create --name multi-arch-builder --bootstrap --use
 
 alpine:
 	docker buildx build --platform linux/amd64,linux/arm64 \
