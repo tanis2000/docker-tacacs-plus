@@ -1,5 +1,5 @@
 # Compile tac_plus
-FROM alpine:3.14 as build
+FROM alpine:3.14 AS build
 
 LABEL Name=tac_plus
 LABEL Version=1.4.0
@@ -29,7 +29,7 @@ COPY tac_plus.sample.cfg /etc/tac_plus/tac_plus.cfg
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apk update && \
-    apk add perl-digest-md5 perl-ldap perl perl-io-socket-ssl && \
+    apk add perl-digest-md5 perl-ldap perl perl-io-socket-ssl python3 && \
     rm -rf /var/cache/apk/*
 
 EXPOSE 49
