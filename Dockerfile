@@ -27,6 +27,7 @@ LABEL maintainer="Valerio Santinelli <santinelli@gmail.com>"
 COPY --from=build /tacacs /tacacs
 COPY tac_plus.sample.cfg /etc/tac_plus/tac_plus.cfg
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod a+x /docker-entrypoint.sh
 
 RUN apt update && \
     apt install -y libdigest-md5-perl libnet-ldap-perl libio-socket-ssl-perl ca-certificates python3 python3-ldap3 && \
